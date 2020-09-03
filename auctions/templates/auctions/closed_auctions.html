@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed auctions</h2>
+
+    {% for item in items %}
+    <div class="card" style="width: 20rem; margin:25px; float:left; font-family: sans-serif; font-style: italic;" >
+        <img class="card-img-top" src={{item.auction.url}} alt="Card image cap">
+        <div class="card-body">
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Title:</label>
+          <h5 class="card-title">{{item.auction.title}}</h5>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Description:</label>
+          <p class="card-text">{{item.auction.description}}</p>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Owner:</label>
+          <p class="card-text">{{item.auction.owner.username}}</p>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Winner:</label>
+          <p class="card-text">{{item.username}} with {{item.bid}}</p>
+        </div>
+      </div>
+    {% empty %}
+    <div class="alert alert-primary" role="alert">No Closed Auctions</div>
+    {% endfor %}
+{% endblock %}

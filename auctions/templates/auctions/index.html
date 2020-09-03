@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    {% for auction in auctions %}
+    <div class="card" style="width: 20rem; margin:25px; float:left; font-family: sans-serif; font-style: italic;" >
+        <img class="card-img-top" src={{auction.item_id.url}} alt="Card image cap">
+        <div class="card-body">
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Title:</label>
+          <h5 class="card-title">{{auction.item_id.title}}</h5>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Starting Bid:</label>
+          <h4>{{auction.bid}}</h4>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Description:</label>
+          <p class="card-text">{{auction.item_id.description}}</p>
+          <a href="{% url 'clicked_auction' auction.item_id.id %}" class="btn btn-primary">Click Here</a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'addwatchlist' auction.item_id.id %}" class="btn btn-primary">Add to WatchList</a>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+    <div class="alert alert-primary" role="alert">No active Listing</div>
+    {% endfor %}
+{% endblock %}

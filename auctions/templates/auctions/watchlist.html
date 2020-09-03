@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watch List</h2>
+
+    {% for item in items %}
+    <div class="card" style="width: 20rem; margin:25px; float:left; font-family: sans-serif; font-style: italic;" >
+        <img class="card-img-top" src={{item.item_id.item_id.url}} alt="Card image cap">
+        <div class="card-body">
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Title:</label>
+          <h5 class="card-title">{{item.item_id.item_id.title}}</h5>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Starting Bid:</label>
+          <h4>{{item.item_id.bid}}</h4>
+          <label style="font-weight: 700; font-size: large; font-style: normal;">Description:</label>
+          <p class="card-text">{{item.item_id.item_id.description}}</p>
+          <a href="{% url 'clicked_auction' item.item_id.item_id.id %}" class="btn btn-primary">Click Here</a>
+          <a href="{% url 'removewatchlist' item.item_id.item_id.id %}" class="btn btn-primary">Remove from WatchList</a>
+        </div>
+      </div>
+    {% empty %}
+    <div class="alert alert-primary" role="alert">No Item in WatchList</div>
+    {% endfor %}
+{% endblock %}

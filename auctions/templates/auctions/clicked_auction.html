@@ -1,0 +1,53 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+{% if user.username == item.item_id.owner.username %}
+<a href="{% url 'closedauctions' item.item_id.id %}" class="btn btn-primary">Close Auction</a>
+{% endif %}
+{% if message %}
+<div class="alert alert-primary" role="alert">{{ message }}</div>
+{% endif %}
+<div class="clicked_auction">
+<img src="{{item.item_id.url}}" alt="auction_img">
+<h3 class="bid" >$ {{item.bid}}</h3>
+{% if user.is_authenticated %}
+<form action="{% url 'clicked_auction' item.item_id.id %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <input class="form-control" type="text" name="bid" placeholder="Place Your Bid">
+    </div>
+    <input class="btn btn-primary" type="submit">
+</form>
+{% else %}
+<div class="alert alert-primary" role="alert">To Place Bid Please Sign in First</div>
+{% endif %}
+<div class="inner_div">
+<h1>Details: </h1>
+<label>listed by: </label>
+<h4 class="heading">{{item.item_id.owner.username}}</h5>
+<label>Title: </label>
+<h4 class="heading">{{item.item_id.title}}</h1>
+<label>Catagory: </label>
+<h4 class="heading">{{item.item_id.Catagory}}</h2>
+<label>Description: </label>
+<h4 class="heading">{{item.item_id.description}}</h2>
+</div>
+</div>
+<h1>Comments</h1>
+    {% for comment in comments %}
+    <ul>
+        <li>{{comment}}</li>
+    </ul>
+    {% empty %}
+    <h6>No Comments Available</h6>
+    {% endfor %}
+{% if user.is_authenticated %}
+<form action="{% url 'comment' item.item_id.id %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <input class="form-control" type="text" name="comment" placeholder="Enter Your Commnent">
+    </div>
+    <button class="btn btn-primary" type="submit">Add Comment</button>
+</form>
+{% endif %}
+
+{% endblock %} 
